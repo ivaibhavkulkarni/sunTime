@@ -10,7 +10,7 @@ import SwiftUI
 struct Summary: View {
     @StateObject private var timerManager = TimerManager()
     @State private var currentStreak = 7
-    @State private var totalSunTime = 45 // minutes
+    @State private var totalSunTime = 30 // minutes
     
     // Mock weather data
     let weatherData = WeatherData(

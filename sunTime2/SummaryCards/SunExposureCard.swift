@@ -169,51 +169,33 @@ struct VitaminDSunRaysContainer: View {
     }
     
     private var sunCore: some View {
-        Circle()
-            .fill(
-                RadialGradient(
-                    gradient: Gradient(colors: [
-                        Color.yellow.opacity(0.9),
-                        Color.orange.opacity(0.8),
-                        Color.orange.opacity(0.4),
-                        Color.clear
-                    ]),
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 50
+        ZStack {
+            Circle()
+                .fill(
+                    RadialGradient(
+                        gradient: Gradient(colors: [
+                            Color.yellow.opacity(0.9),
+                            Color.orange.opacity(0.8),
+                            Color.orange.opacity(0.4),
+                            Color.clear
+                        ]),
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 50
+                    )
                 )
-            )
-            .frame(width: 100, height: 100)
-            .scaleEffect(0.9 + 0.1 * sin(rotationAngle * 2))
-            .blur(radius: 1)
-    }
-    
-    private var dynamicSunRays: some View {
-        let rayCount = max(Int(progress * 12), 1)
-        let angleStep = 360.0 / Double(rayCount)
-        return ForEach(0..<rayCount, id: \.self) { index in
-            let rayAngle = Double(index) * angleStep + rotationAngle
-            SunRay(
-                angle: rayAngle,
-                length: 80,
-                width: 3,
-                intensity: rayIntensity
-            )
-            .stroke(
-                LinearGradient(
-                    gradient: Gradient(colors: [
-                        Color.yellow.opacity(0.8),
-                        Color.orange.opacity(0.6),
-                        Color.yellow.opacity(0.4)
-                    ]),
-                    startPoint: .leading,
-                    endPoint: .trailing
-                ),
-                lineWidth: 4
-            )
-            .opacity(rayIntensity)
+                .frame(width: 100, height: 100)
+                .scaleEffect(0.9 + 0.1 * sin(rotationAngle * 2))
+                .blur(radius: 1)
+            
+            Image(systemName: "sun.max.fill")
+                .font(.title)
+                .foregroundColor(.orange)
+                .scaleEffect(1.2)
         }
     }
+    
+
     
     private var vitaminDParticlesOuter: some View {
         ForEach(0..<Int(progress * 8), id: \.self) { index in
@@ -296,7 +278,6 @@ struct VitaminDSunRaysContainer: View {
         ZStack {
             skyBackground
             sunCore
-            dynamicSunRays
             vitaminDParticlesOuter
             vitaminDParticlesInner
             progressIndicator
@@ -335,10 +316,6 @@ struct SunExposureCard: View {
                 
                 Spacer()
                 
-                Image(systemName: "sun.max.fill")
-                    .font(.title)
-                    .foregroundColor(.orange)
-                    .scaleEffect(1.2)
             }
             
             // Vitamin D Sun Rays container
@@ -367,5 +344,5 @@ struct SunExposureCard: View {
 }
 
 #Preview {
-    SunExposureCard(totalSunTime: 15)
+    SunExposureCard(totalSunTime: 60)
 }
